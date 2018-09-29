@@ -64,6 +64,10 @@ case "$opt" in
 		8)
 		echo "changing root"
 		arch-chroot /mnt
+		git clone https://github.com/mehdusa/arch-install.git
+		cd arch-install
+		chmod +x arch-install
+		./arch-install
 		;;		
 		9)
 		echo archlinux>/etc/hostname
