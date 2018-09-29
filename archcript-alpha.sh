@@ -55,7 +55,7 @@ case "$opt" in
 		;;
 		6)
 		echo "Installing Base System"
-		pacstrap /mnt -base
+		pacstrap /mnt base
 		;;
 		7)
 		echo "Configure Fstab"
