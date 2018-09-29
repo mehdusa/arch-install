@@ -91,6 +91,7 @@ case "$opt" in
 		echo "please enter root password"
 		sleep 0.5
 		passwd
+		;;
 		e)
 		break
 		clear
