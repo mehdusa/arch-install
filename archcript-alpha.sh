@@ -1,0 +1,100 @@
+#!/bin/bash
+
+sudo pacman -Sy
+
+x=0
+while [ $x -eq 0 ] 
+do 
+	clear
+	echo " 1) [ ] Make Keymap Fr"
+	echo " 2) [ ] Refrech Arch Repos"
+	echo " 3) [ ] Configure Mirrorlist"
+	echo " 4) [ ] Partition Scheme"
+	echo " 5) [ ] Format & mount partitions"
+	echo " 6) [ ] Install Base System"
+	echo " 7) [ ] Configure Fstab"
+	echo " 8) [ ] change root"
+	echo " 9) [ ] Configure Hostname"
+	echo "10) [ ] Configure TimeZone"
+	echo "11) [ ] Configure Hardware Clock"
+	echo "12) [ ] Configure Mkinicpio"
+	echo "13) [ ] Install Bootloader"
+	echo "14) [ ] Root Password"
+	echo 
+	echo  " d) Done"
+	echo  " e) Exit"
+	echo 
+	echo "Enter n° of options (ex: 1 2 3): " 
+
+	read opt
+
+case "$opt" in 
+		1)
+		echo "loading keymap for fr keyboard"
+		sudo loadkeys us
+		sleep 0.5
+		;;
+		2)
+		echo "refreching arch repository"
+		sudo pacman -Sy
+		;;
+		3)
+		echo "Installing Reflector and use it"
+		sudo pacman -S --noconfirm reflector
+		reflector -c "France" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist
+		sudo pacman -Sy
+		;;
+		4)
+		echo "cfdisk Disk Manager"
+		sudo cfdisk /dev/sda
+		;;
+		5) 
+		echo " formating & mounting partitions"
+		mkfs.ext4 /dev/sda1
+		mount /dev/sda1 /mnt
+		;;
+		6)
+		echo "Installing Base System"
+		pacstrap /mnt -base
+		;;
+		7)
+		echo "Configure Fstab"
+		genfstab -U /mnt >> /mnt/etc/fstab
+		;;
+		8)
+		echo "changing root"
+		arch-chroot /mnt
+		;;		
+		9)
+		echo ""
+		echo archlinux>/etc/hostname
+		echo -e "\n127.0.0.1	localhost\n::1		localhost\n127.0.1.1	archlinux.localdomain	archlinux" >>/etc/hosts
+		;;
+		10)
+		timedatectl set-ntp true
+		ln -sf /usr/share/zoneinfo/Africa/Algiers /etc/localtime
+		hwclock --systohc
+		locale-gen
+		;;
+		11)
+		echo -e "LANG=fr_FR.UTF-8\nLC_COLLATE=C" >/etc/locale.conf
+		12)
+		mkinitcpio -p linux
+		;;
+		13)
+		sudo pacman -S --noconfirm grub
+		grub-install /dev/sda
+		grub-mkconfig -o /boot/grub/grub.cfg
+		;;
+		14)
+		echo "please enter root password"
+		sleep 0.5
+		passwd
+		e)
+		break
+		clear
+		exit
+	esac
+
+done
+
