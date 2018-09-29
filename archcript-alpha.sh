@@ -66,7 +66,6 @@ case "$opt" in
 		arch-chroot /mnt
 		;;		
 		9)
-		echo ""
 		echo archlinux>/etc/hostname
 		echo -e "\n127.0.0.1	localhost\n::1		localhost\n127.0.1.1	archlinux.localdomain	archlinux" >>/etc/hosts
 		;;
