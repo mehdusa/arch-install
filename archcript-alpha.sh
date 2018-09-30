@@ -30,7 +30,7 @@ do
 case "$opt" in 
 		1)
 		echo "loading keymap for fr keyboard"
-		sudo loadkeys us
+		sudo loadkeys fr
 		sleep 0.5
 		;;
 		2)
