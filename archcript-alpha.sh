@@ -30,7 +30,7 @@ do
 case "$opt" in 
 		1)
 		echo "loading keymap for fr keyboard"
-		sudo loadkeys fr
+		sudo loadkeys us
 		sleep 0.5
 		;;
 		2)
@@ -54,7 +54,7 @@ case "$opt" in
 		;;
 		6)
 		echo "Installing Base System"
-		pacstrap /mnt -base
+		pacstrap /mnt base
 		;;
 		7)
 		echo "Configure Fstab"
