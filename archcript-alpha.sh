@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pacman -Sy
+sudo pacman -Sy
 
 x=0
 while [ $x -eq 0 ] 
@@ -13,13 +13,12 @@ do
 	echo " 5) [ ] Format & mount partitions"
 	echo " 6) [ ] Install Base System"
 	echo " 7) [ ] Configure Fstab"
-	echo " 8) [ ] change root"
-	echo " 9) [ ] Configure Hostname"
-	echo "10) [ ] Configure TimeZone"
-	echo "11) [ ] Configure Hardware Clock"
-	echo "12) [ ] Configure Mkinicpio"
-	echo "13) [ ] Install Bootloader"
-	echo "14) [ ] Root Password"
+	echo " 8) [ ] Configure Hostname"
+	echo " 9) [ ] Configure TimeZone"
+	echo "10) [ ] Configure Hardware Clock"
+	echo "11) [ ] Configure Mkinicpio"
+	echo "12) [ ] Install Bootloader"
+	echo "13) [ ] Root Password"
 	echo 
 	echo  " d) Done"
 	echo  " e) Exit"
@@ -31,22 +30,22 @@ do
 case "$opt" in 
 		1)
 		echo "loading keymap for fr keyboard"
-		loadkeys us
+		sudo loadkeys us
 		sleep 0.5
 		;;
 		2)
 		echo "refreching arch repository"
-		pacman -Sy
+		sudo pacman -Sy
 		;;
 		3)
 		echo "Installing Reflector and use it"
-		pacman -S --noconfirm reflector
+		sudo pacman -S --noconfirm reflector
 		reflector -c "France" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist
 		sudo pacman -Sy
 		;;
 		4)
 		echo "cfdisk Disk Manager"
-		cfdisk /dev/sda
+		sudo cfdisk /dev/sda
 		;;
 		5) 
 		echo " formating & mounting partitions"
@@ -55,21 +54,14 @@ case "$opt" in
 		;;
 		6)
 		echo "Installing Base System"
-		pacstrap /mnt base
+		pacstrap /mnt -base
 		;;
 		7)
 		echo "Configure Fstab"
 		genfstab -U /mnt >> /mnt/etc/fstab
 		;;
-		8)
-		echo "changing root"
-		arch-chroot /mnt
-		git clone https://github.com/mehdusa/arch-install.git
-		cd arch-install
-		chmod +x arch-install
-		./arch-install
-		;;		
 		9)
+		echo ""
 		echo archlinux>/etc/hostname
 		echo -e "\n127.0.0.1	localhost\n::1		localhost\n127.0.1.1	archlinux.localdomain	archlinux" >>/etc/hosts
 		;;
@@ -81,7 +73,6 @@ case "$opt" in
 		;;
 		11)
 		echo -e "LANG=fr_FR.UTF-8\nLC_COLLATE=C" >/etc/locale.conf
-		;;
 		12)
 		mkinitcpio -p linux
 		;;
@@ -94,7 +85,6 @@ case "$opt" in
 		echo "please enter root password"
 		sleep 0.5
 		passwd
-		;;
 		e)
 		break
 		clear
