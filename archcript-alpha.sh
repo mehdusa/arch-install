@@ -73,6 +73,7 @@ case "$opt" in
 		;;
 		11)
 		echo -e "LANG=fr_FR.UTF-8\nLC_COLLATE=C" >/etc/locale.conf
+		;;
 		12)
 		mkinitcpio -p linux
 		;;
