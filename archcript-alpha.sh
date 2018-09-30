@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo pacman -Sy
+pacman -Sy
 
 x=0
 while [ $x -eq 0 ] 
@@ -30,22 +30,22 @@ do
 case "$opt" in 
 		1)
 		echo "loading keymap for fr keyboard"
-		sudo loadkeys us
+		loadkeys us
 		sleep 0.5
 		;;
 		2)
 		echo "refreching arch repository"
-		sudo pacman -Sy
+		pacman -Sy
 		;;
 		3)
 		echo "Installing Reflector and use it"
-		sudo pacman -S --noconfirm reflector
+		pacman -S --noconfirm reflector
 		reflector -c "France" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist
-		sudo pacman -Sy
+		pacman -Sy
 		;;
 		4)
 		echo "cfdisk Disk Manager"
-		sudo cfdisk /dev/sda
+		cfdisk /dev/sda
 		;;
 		5) 
 		echo " formating & mounting partitions"
@@ -78,7 +78,7 @@ case "$opt" in
 		mkinitcpio -p linux
 		;;
 		13)
-		sudo pacman -S --noconfirm grub
+		pacman -S --noconfirm grub
 		grub-install /dev/sda
 		grub-mkconfig -o /boot/grub/grub.cfg
 		;;
